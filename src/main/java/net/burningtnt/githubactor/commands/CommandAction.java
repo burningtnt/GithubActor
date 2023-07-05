@@ -15,7 +15,7 @@ public final class CommandAction {
     }
 
     public static void updateIssueStatus(CommandContext<Message> context, Logger logger, GithubAPI.IssueStatus issueStatus) {
-        String token = TokenHolder.get(context.getArgument("repository", String.class));
+        String token = TokenHolder.get(context.getArgument("repository", String.class), context.getSource());
         if (token == null) {
             logger.error(String.format("No token found for %s.", context.getArgument("repository", String.class)));
             context.getSource().sendToSource(new MarkdownComponent(String.format("No token found for %s.", context.getArgument("repository", String.class))));

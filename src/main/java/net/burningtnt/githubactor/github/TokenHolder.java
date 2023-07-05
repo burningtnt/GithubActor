@@ -3,6 +3,9 @@ package net.burningtnt.githubactor.github;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import snw.jkook.message.Message;
+import snw.jkook.message.PrivateMessage;
+import snw.jkook.message.TextChannelMessage;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -33,13 +36,24 @@ public final class TokenHolder {
         }
     }
 
-    public static void put(String path, String token) {
-        map.put(path, token);
+    public static void put(String path, String token, Message message) {
+        if (message instanceof TextChannelMessage textChannelMessage) {
+            map.put(path + "@channel-message:" + textChannelMessage.getChannel().getId(), token);
+        } else if (message instanceof PrivateMessage) {
+            map.put(path + "@private-message:" + message.getSender().getId(), token);
+        }
+
         CompletableFuture.runAsync(TokenHolder::saveToFile);
     }
 
-    public static String get(String path) {
-        return map.get(path);
+    public static String get(String path, Message message) {
+        if (message instanceof TextChannelMessage textChannelMessage) {
+            return map.get(path + "@channel-message:" + textChannelMessage.getChannel().getId());
+        } else if (message instanceof PrivateMessage) {
+            return map.get(path + "@private-message:" + message.getSender().getId());
+        } else {
+            return null;
+        }
     }
 
     private static synchronized void saveToFile() {

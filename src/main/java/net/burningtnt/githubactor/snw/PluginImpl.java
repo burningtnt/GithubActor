@@ -23,7 +23,7 @@ public class PluginImpl extends BasePlugin {
                         CommandHolder.execute(markdownComponent.toString(), message);
                     } catch (CommandSyntaxException e) {
                         this.getLogger().info("Invalid command.", e);
-                        message.sendToSource(new MarkdownComponent("Invalid command."));
+                        message.sendToSource(new MarkdownComponent("Invalid command. Try /github help"));
                     } catch (Throwable e) {
                         this.getLogger().info("Unknown exception.", e);
                         message.sendToSource(new MarkdownComponent("Unknown exception."));

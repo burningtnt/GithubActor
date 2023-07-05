@@ -52,7 +52,7 @@ public final class CommandHolder {
                                         LiteralArgumentBuilder.<Message>literal("put").then(
                                                 LiteralArgumentBuilder.<Message>literal("close-issues").then(
                                                         RequiredArgumentBuilder.<Message, String>argument("token", StringArgumentType.string()).executes(context -> {
-                                                            TokenHolder.put(context.getArgument("repository", String.class), context.getArgument("token", String.class));
+                                                            TokenHolder.put(context.getArgument("repository", String.class), context.getArgument("token", String.class), context.getSource());
                                                             context.getSource().sendToSource(new MarkdownComponent(String.format("Token for %s is added.", context.getArgument("repository", String.class))));
 
                                                             context.getSource().delete();
@@ -62,6 +62,37 @@ public final class CommandHolder {
                                         )
                                 )
                         )
+                ).then(
+                        LiteralArgumentBuilder.<Message>literal("help").then(
+                                LiteralArgumentBuilder.<Message>literal("do").executes(context -> {
+                                    context.getSource().sendToSource(new MarkdownComponent("""
+                                    Command tree: /github do ...
+                                    - /github do <repository> issues <issueID> status close-true
+                                    - /github do <repository> issues <issueID> status close-false
+                                    - /github do <repository> issues <issueID> status reopen
+                                    
+                                      <repository: String>: the path to the github repository. e.g. \"burningtnt/GithubActor\"
+                                      <issuesID: Integer>: the id of the issue. e.g. 1"""));
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                        ).then(
+                                LiteralArgumentBuilder.<Message>literal("tokens").executes(context -> {
+                                    context.getSource().sendToSource(new MarkdownComponent("""
+                                    Command tree: /github tokens ...
+                                    - /github tokens <repository> put close-issues <token>
+                                    
+                                      <repository: String>: the path to the github repository. e.g. \"burningtnt/GithubActor\"
+                                      <token: String>: the token for the repository. e.g. ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"""));
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                        ).executes(context -> {
+                            context.getSource().sendToSource(new MarkdownComponent("""
+                                    Command tree: /github ...
+                                    - /github help : display this help message.
+                                    - /github do : do actions.
+                                    - /github tokens : register tokens"""));
+                            return Command.SINGLE_SUCCESS;
+                        })
                 )
         );
     }
