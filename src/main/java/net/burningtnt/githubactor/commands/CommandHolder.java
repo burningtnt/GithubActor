@@ -82,7 +82,7 @@ public final class CommandHolder {
                                     - /github tokens <repository> put close-issues <token>
                                     
                                       <repository: String>: the path to the github repository. e.g. \"burningtnt/GithubActor\"
-                                      <token: String>: the token for the repository. e.g. ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"""));
+                                      <token: String>: the personal access token (classic) for the repository. Get the personal access token (classic) from the webpage https://github.com/settings/tokens/new . Required scope : repo. e.g. ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"""));
                                     return Command.SINGLE_SUCCESS;
                                 })
                         ).executes(context -> {
@@ -90,7 +90,8 @@ public final class CommandHolder {
                                     Command tree: /github ...
                                     - /github help : display this help message.
                                     - /github do : do actions.
-                                    - /github tokens : register tokens"""));
+                                    - /github tokens : register tokens
+                                    - /github [do|tokens] : More details about /github do and /github tokens"""));
                             return Command.SINGLE_SUCCESS;
                         })
                 )
