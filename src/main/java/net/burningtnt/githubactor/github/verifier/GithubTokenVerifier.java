@@ -1,9 +1,9 @@
-package net.burningtnt.githubactor.github.valid;
+package net.burningtnt.githubactor.github.verifier;
 
 import java.util.regex.Pattern;
 
-public final class Token {
-    private Token() {
+public final class GithubTokenVerifier {
+    private GithubTokenVerifier() {
     }
 
     private static final Pattern filter = Pattern.compile("^ghp_[a-zA-z0-9]{36}$");

@@ -36,21 +36,21 @@ public final class TokenHolder {
         }
     }
 
-    public static void put(String path, String token, Message message) {
+    public static void put(String repository, String token, Message message) {
         if (message instanceof TextChannelMessage textChannelMessage) {
-            map.put(path + "@channel-message:" + textChannelMessage.getChannel().getId(), token);
+            map.put(repository + "@channel-message:" + textChannelMessage.getChannel().getId(), token);
         } else if (message instanceof PrivateMessage) {
-            map.put(path + "@private-message:" + message.getSender().getId(), token);
+            map.put(repository + "@private-message:" + message.getSender().getId(), token);
         }
 
         CompletableFuture.runAsync(TokenHolder::saveToFile);
     }
 
-    public static String get(String path, Message message) {
+    public static String get(String repository, Message message) {
         if (message instanceof TextChannelMessage textChannelMessage) {
-            return map.get(path + "@channel-message:" + textChannelMessage.getChannel().getId());
+            return map.get(repository + "@channel-message:" + textChannelMessage.getChannel().getId());
         } else if (message instanceof PrivateMessage) {
-            return map.get(path + "@private-message:" + message.getSender().getId());
+            return map.get(repository + "@private-message:" + message.getSender().getId());
         } else {
             return null;
         }

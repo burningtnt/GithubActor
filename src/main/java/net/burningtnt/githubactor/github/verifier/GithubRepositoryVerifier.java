@@ -1,9 +1,9 @@
-package net.burningtnt.githubactor.github.valid;
+package net.burningtnt.githubactor.github.verifier;
 
 import java.util.regex.Pattern;
 
-public final class GithubRepository {
-    private GithubRepository() {
+public final class GithubRepositoryVerifier {
+    private GithubRepositoryVerifier() {
     }
 
     private static final Pattern filter = Pattern.compile("^\\w+$");

@@ -17,7 +17,7 @@ public class PluginImpl extends BasePlugin {
         TokenHolder.read();
 
         new JKookCommand("github").setExecutor((sender, args, message) -> {
-            if (sender instanceof User user && message != null) {
+            if (sender instanceof User && message != null) {
                 if (message.getComponent() instanceof MarkdownComponent markdownComponent) {
                     try {
                         CommandHolder.execute(markdownComponent.toString(), message);

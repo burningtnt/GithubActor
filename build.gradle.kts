@@ -39,7 +39,7 @@ tasks.getByName("build") {
     })
 }
 
-val plugin = tasks.create<Copy>("plugin") {
+val copyToRuntimeEnv = tasks.create<Copy>("copyToRuntimeEnv") {
     dependsOn(tasks.getByName("shadowJar"))
 
     this.destinationDir = File("runtime/plugins")
