@@ -44,7 +44,7 @@ public final class CommandAction {
         } else {
             TokenHolder.put(repository, token, message);
 
-            message.sendToSource(new MarkdownComponent(String.format("GithubTokenVerifier for %s is added.", repository)));
+            message.sendToSource(new MarkdownComponent(String.format("Github Token for %s is added.", repository)));
             message.delete();
         }
     }
